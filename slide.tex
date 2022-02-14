@@ -181,7 +181,10 @@
 			\begin{itemize}
 				\item コンピュータには言語がわからぬ...
 			\end{itemize}
-		\item ``文''を数理モデル化して，``文の良さ''を評価しよう！
+		\item ``文''を数理モデル化しよう！
+			\begin{itemize}
+				\item 確率的言語というのを考えます
+			\end{itemize}
 	\end{itemize}
 \end{frame}
 
@@ -189,9 +192,9 @@
 	\frametitle{確率的言語}
 
 	\begin{itemize}
-		\item 文を「その文が起きる確率」として捉える
+		\item 「その文が起きる確率」というのを考える
 			\begin{itemize}
-				\item 言語を確率$P$によって，$P(\text{文})$で表す
+				\item 文の確率$P(\text{文})$を考える
 				\item $P(\text{toki pona li toki pona!})$とか
 			\end{itemize}
 		\item なにがうれしいの？
@@ -210,12 +213,44 @@
 						\item 明らかに$A$のほうがよい
 						\item $P(A) > P(B)$となるはず
 					\end{itemize}
+				\item 確率的言語は文法を扱えるかも？
 			\end{itemize}
-		\item 確率で言語を近似することができれば，文法・意味的に``良い文''・``悪い文''を定性的に評価できる
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{確率的言語}
+
+	\begin{itemize}
+		\item 次の2つの文$A, B$はどちらが``良い''文だろうか？
 			\begin{itemize}
-				\item チャットボットが作れる
-				\item 機械翻訳などもこの考えを元に作られている
+				\item 文$A$: ma tomo Tokijo li lon ma Nijon.
+				\item 文$B$: ma tomo Lanten li lon ma Tosi.
+					\begin{itemize}
+						\item $A$は正しいが，$B$は間違い
+						\item $P(A) > P(B)$となるはず
+					\end{itemize}
+				\item 確率的言語は意味や常識を扱えるかも？
 			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{確率的言語}
+
+	\begin{itemize}
+		\item 確率で言語を近似することができれば，文法や意味を捉えたモデルを作成できるのでは？
+			\begin{itemize}
+				\item ``良い文''・``悪い文''を定性的に評価できる
+					\begin{itemize}
+						\item チャットボットも作れる
+					\end{itemize}
+				\item もっと広く言語処理の様々な場面で使われている
+					\begin{itemize}
+						\item 機械翻訳などもこの考えを元に作られている
+					\end{itemize}
+			\end{itemize}
+		\item 文の確率をどうやって計算するの？
 	\end{itemize}
 \end{frame}
 
@@ -282,11 +317,130 @@
 					\end{itemize}
 			\end{itemize}
 		\item 次からのスライドで細かいことを説明します
+			\begin{itemize}
+				\item {\scriptsize 注: ここで説明するのは，
+					一般によく言われている
+					Transformer Encoder-Decoderモデルのことではなく，
+					Transformer言語モデルのことです．}
+			\end{itemize}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Transformerモデル}
+
+	\begin{itemize}
+		\item Transformerモデルは次の部分からなっている
+			\begin{itemize}
+				\item 単語 Embedding 層
+				\item 位置 Embedding 層
+				\item Self-attention 層
+				\item Feed-forward 層
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{単語 Embedding 層}
+
+	\begin{itemize}
+		\item 単語をベクトルに変換する
+			\begin{itemize}
+				\item Mopumopuでは1024次元
+				\item 逆（ベクトル->単語）もできる
+			\end{itemize}
+	\end{itemize}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=10cm]{embed.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{位置 Embedding 層 {\small (難しい)}}
+
+	\begin{itemize}
+		\item 位置（何番目の単語か）をベクトルで表す
+			\begin{itemize}
+				\item 三角関数の回転を利用している
+				\item $t$番目の$i$次元が
+					\[
+						\bm{p}_t^{(i)}
+						=
+						\begin{cases}
+							\sin \left( \omega_k t \right) & (i = 2k) \\
+							\cos \left( \omega_k t \right) & (i = 2k + 1) \\
+						\end{cases}
+					\]
+			\end{itemize}
+	\end{itemize}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=7.5cm]{posenc.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Self-attention 層 {\small (難しい)}}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Feed-forward 層}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Transformerモデル}
+
+	\begin{itemize}
+		\item それをこんな感じで組み合わせると
+	\end{itemize}
+
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}[>=latex,font=\sffamily,scale=1.0,transform shape]
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (a) at (0, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (b) at (1, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (c) at (2, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (d) at (3, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (e) at (4, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (f) at (5, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (g) at (6, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (h) at (7, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (i) at (8, 0) {};
+			\draw[->] (a.east) -- (b.west);
+			\draw[->] (b.east) -- (c.west);
+			\draw[->] (c.east) -- (d.west);
+			\draw[->] (d.east) -- (e.west);
+			\draw[->] (e.east) -- (f.west);
+			\draw[->] (f.east) -- (g.west);
+			\draw[->] (g.east) -- (h.west);
+			\draw[->] (h.east) -- (i.west);
+			\node[rotate=90] at (0, 0) {\scriptsize 単語 Embedding 層};
+			\node[rotate=90] at (1, 0) {\scriptsize 位置 Embedding 層};
+			\node[rotate=90] at (2, 0) {\scriptsize Self-attention 層};
+			\node[rotate=90] at (3, 0) {\scriptsize Feed-forward 層};
+			\node[rotate=90] at (4, 0) {\scriptsize Self-attention 層};
+			\node[rotate=90] at (5, 0) {\scriptsize Feed-forward 層};
+			\node[rotate=90] at (6, 0) {\scriptsize Self-attention 層};
+			\node[rotate=90] at (7, 0) {\scriptsize Feed-forward 層};
+			\node[rotate=90] at (8, 0) {\scriptsize 単語 Embedding 層};
+			\node[rotate=90] at (2.5, -1.7) {\scalebox{1}[3]{$\lbrace$}};
+			\node[rotate=90] at (4.5, -1.7) {\scalebox{1}[3]{$\lbrace$}};
+			\node[rotate=90] at (6.5, -1.7) {\scalebox{1}[3]{$\lbrace$}};
+			\node (x) at (-1, 0) {\scriptsize 入力};
+			\node (y) at (9, 0) {\scriptsize 出力};
+			\draw[->] (x.east) -- (a.west);
+			\draw[->] (i.east) -- (y.west);
+		\end{tikzpicture}
+	\end{figure}
+
+	\begin{itemize}
+		\item なんと言語モデルができる
+	\end{itemize}
 
 \end{frame}
 
@@ -315,10 +469,32 @@
 
 \begin{frame}
 	\frametitle{確率的勾配降下法}
+
+	\begin{itemize}
+		\item クロスエントロピーを微分した方向の逆にモデルのパラメータを動かしていけば，
+			小さくなっていくのでは？
+			\begin{itemize}
+				\item 「標高が低い方に進めば下山できるのでは？」
+					\begin{itemize}
+						\item[] \hspace{5em} {\scriptsize \color{lightgray} 遭難するのでやってはいけない}
+					\end{itemize}
+				\item 言語モデルが学習できる！
+			\end{itemize}
+		\item ほんとにこんなんで学習できるのか？
+			\begin{itemize}
+				\item 厳しいので工夫する
+			\end{itemize}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Adamアルゴリズム}
+
+	\begin{itemize}
+		\item a
+	\end{itemize}
+
+	(SDGの式に2つ修正点があって，1次の向きをおさえてるのと，2次の大きさをおさえてるのがあるんだって話をかけばいい)
 \end{frame}
 
 \begin{frame}
@@ -326,7 +502,11 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{ランダムサンプリングは？}
+	\frametitle{ランダムサンプリング}
+\end{frame}
+
+\begin{frame}
+	\frametitle{ランダムサンプリングは厳しい}
 \end{frame}
 
 \begin{frame}
@@ -334,7 +514,15 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{PyTorchを使って学習・推論をする}
+	\frametitle{PyTorch}
+\end{frame}
+
+\begin{frame}
+	\frametitle{nymwa/ponapt}
+\end{frame}
+
+\begin{frame}
+	\frametitle{実際に動かす}
 \end{frame}
 
 \begin{frame}
@@ -348,6 +536,10 @@
 
 \begin{frame}
 	\frametitle{Twitter APIを使う}
+\end{frame}
+
+\begin{frame}
+	\frametitle{おわりに}
 \end{frame}
 
 \end{document}
