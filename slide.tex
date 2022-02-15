@@ -63,7 +63,7 @@
 
 % itemize
 \usepackage{enumitem}
-\setitemize{itemsep=0.2em}
+\setitemize{itemsep=0.3em}
 \setlength\leftmargini{20pt}
 \setlength\leftmarginii{20pt}
 \setlength\leftmarginiii{20pt}
@@ -99,7 +99,10 @@
 
 \begin{frame}
 	\begin{center}
-		{\huge \color{cyan} そうぇり　もぷもぷ}
+		{\huge \color{cyan} そうぇり　もぷもぷ} \\
+		\vspace{2em}
+		{\small 〜ミニマリズム人工言語のボットは作れるか〜} \\
+		{\scriptsize 多分言語創作と計算機が好きな人に向けた資料}
 	\end{center}
 \end{frame}
 
@@ -111,6 +114,7 @@
 		\item Twitter上のトキポナボット
 			\begin{itemize}
 				\item \href{https://twitter.com/soweli_mopumopu}{@soweli\_mopumopu}
+				\item 2019年からうごいている
 			\end{itemize}
 	\end{itemize}
 	
@@ -155,13 +159,13 @@
 	\frametitle{トキポナとは}
 
 	\begin{itemize}
-		\item みんなが知ってるミニマル言語
+		\item みんなが知ってるミニマリズム人工言語
 			\begin{itemize}
-				\item 語彙数: 120語
+				\item 語彙数: \alert{120語}
 				\item 習得がかんたん　たのしい！
 				\item できる人が割と多い　たのしい！
 			\end{itemize}
-		\item 知らない人のために
+		\item ごくわずかな知らない人のために
 			\begin{itemize}
 				\item \href{https://twitter.com/notolytos/status/1409484535151042568}{\small 初級トキポナ文法簡介}
 				\item \href{https://www.youtube.com/watch?v=9C0YqTs4vB8}{\small 2分40秒で世界一簡単な言語を紹介して伝授する}
@@ -183,7 +187,7 @@
 			\end{itemize}
 		\item ``文''を数理モデル化しよう！
 			\begin{itemize}
-				\item 確率的言語というのを考えます
+				\item \alert{確率的言語}というのを考えます
 			\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -208,12 +212,24 @@
 		\item 次の2つの文$A, B$はどちらが``良い''文だろうか？
 			\begin{itemize}
 				\item 文$A$: toki pona li toki pona.
+					\begin{itemize}
+						\item[]
+						\begin{itemize}
+							\item 「トキポナは良い(pona)言語(toki)」
+						\end{itemize}
+					\end{itemize}
 				\item 文$B$: a akesi ala alasa ale.
+					\begin{itemize}
+						\item[]
+							\begin{itemize}
+								\item 非文
+							\end{itemize}
+					\end{itemize}
 					\begin{itemize}
 						\item 明らかに$A$のほうがよい
 						\item $P(A) > P(B)$となるはず
 					\end{itemize}
-				\item 確率的言語は文法を扱えるかも？
+				\item 確率的言語は\alert{文法を扱える}かも？
 			\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -225,12 +241,24 @@
 		\item 次の2つの文$A, B$はどちらが``良い''文だろうか？
 			\begin{itemize}
 				\item 文$A$: ma tomo Tokijo li lon ma Nijon.
+					\begin{itemize}
+						\item[]
+							\begin{itemize}
+								\item 「東京は日本にある」
+							\end{itemize}
+					\end{itemize}
 				\item 文$B$: ma tomo Lanten li lon ma Tosi.
+					\begin{itemize}
+						\item[]
+							\begin{itemize}
+								\item 「ロンドンはドイツにある」
+							\end{itemize}
+					\end{itemize}
 					\begin{itemize}
 						\item $A$は正しいが，$B$は間違い
 						\item $P(A) > P(B)$となるはず
 					\end{itemize}
-				\item 確率的言語は意味や常識を扱えるかも？
+				\item 確率的言語は\alert{意味や常識を扱える}かも？
 			\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -239,7 +267,7 @@
 	\frametitle{確率的言語}
 
 	\begin{itemize}
-		\item 確率で言語を近似することができれば，文法や意味を捉えたモデルを作成できるのでは？
+		\item \alert{確率で言語を近似}することができれば，文法や意味を捉えたモデルを作成できるのでは？
 			\begin{itemize}
 				\item ``良い文''・``悪い文''を定性的に評価できる
 					\begin{itemize}
@@ -262,7 +290,7 @@
 		\item つまり，
 			\begin{itemize}
 				\item 文$w_1^n = w_1 w_2 \cdots w_n$を入力して，
-				\item $P(w_1^n)$を計算・出力する関数のようなもの
+				\item 文の確率$P(w_1^n)$を計算・出力する関数てきなの
 			\end{itemize}
 		\item どのように計算する？
 			\begin{itemize}
@@ -283,6 +311,7 @@
 			& = P(w_1) P(w_2, w_3, \cdots, w_n | w_1) \\
 			& = P(w_1) P(w_2 | w_1) P(w_3, w_4, \cdots, w_n | w_1, w_2) \\
 			& = P(w_1) P(w_2 | w_1) P(w_3 | w_1^2) P(w_4^n | w_1^3) \\
+			& \cdots \\
 			& = \prod_{i=1}^{n} P(w_i | w_1^{i-1})
 	\end{align*}
 
@@ -374,21 +403,88 @@
 							\cos \left( \omega_k t \right) & (i = 2k + 1) \\
 						\end{cases}
 					\]
+				\item 細かいことはわかんなくてもいいよ
 			\end{itemize}
 	\end{itemize}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=7.5cm]{posenc.png}
+		\begin{minipage}{0.15\linewidth}
+			\hspace{1em}
+		\end{minipage}
+		\begin{minipage}{0.60\linewidth}
+			\includegraphics[width=6.5cm]{posenc.png}
+		\end{minipage}
+		\begin{minipage}{0.15\linewidth}
+			{\scriptsize ←こんなん}
+		\end{minipage}
 	\end{figure}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Self-attention 層 {\small (難しい)}}
 
+	\begin{itemize}
+		\item 前の単語の情報を足し合わせ，次の単語を予測
+			\begin{itemize}
+				\item 文脈から意味や構造を捉えて，次に来そうな単語を決めていく
+				\item Multi-head Attentionとか，Residual Connectionとか，Layer Normalizationとか，細かいことは調べて
+			\end{itemize}
+	\end{itemize}
+
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}[>=latex,font=\sffamily,scale=1.0,transform shape]
+			\node[anchor=base] (a1) at (0.0, 2) {<start>};
+			\node[anchor=base] (b1) at (1.5, 2) {toki};
+			\node[anchor=base] (c1) at (3.0, 2) {pona};
+			\node[anchor=base] (d1) at (4.5, 2) {li};
+			\node[anchor=base] (e1) at (6.0, 2) {toki};
+			\node[anchor=base] (f1) at (7.5, 2) {pona};
+			\node[anchor=base] (g1) at (9.0, 2) {.};
+			\node[anchor=base] (a2) at (0.0, 0) {toki};
+			\node[anchor=base] (b2) at (1.5, 0) {pona};
+			\node[anchor=base] (c2) at (3.0, 0) {li};
+			\node[anchor=base] (d2) at (4.5, 0) {toki};
+			\node[anchor=base] (e2) at (6.0, 0) {pona};
+			\node[anchor=base] (f2) at (7.5, 0) {.};
+			\node[anchor=base] (g2) at (9.0, 0) {<end>};
+			\draw[->] (a1.south) -- (d2.north);
+			\draw[->] (b1.south) -- (d2.north);
+			\draw[->] (c1.south) -- (d2.north);
+			\draw[->] (d1.south) -- (d2.north);
+			\node at (6.5, 1.2) {\small toki pona liの次は?};
+		\end{tikzpicture}
+	\end{figure}
+
 \end{frame}
 
 \begin{frame}
 	\frametitle{Feed-forward 層}
+
+	\begin{itemize}
+		\item 足し合わせるだけだと厳しいので，非線形変換をする
+			\begin{itemize}
+				\item 活性化関数が非線形変換になっているので，複雑な変換ができる（多分）
+			\end{itemize}
+	\end{itemize}
+
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}[>=latex,font=\sffamily,scale=1.0,transform shape]
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (a) at (0, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (b) at (1, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (c) at (2, 0) {};
+			\draw[->] (a.east) -- (b.west);
+			\draw[->] (b.east) -- (c.west);
+			\node[rotate=90] at (0, 0) {\scriptsize 線形変換};
+			\node[rotate=90] at (1, 0) {\scriptsize 活性化関数};
+			\node[rotate=90] at (2, 0) {\scriptsize 線形変換};
+			\node (x) at (-1, 0) {\scriptsize 入力};
+			\node (y) at (3, 0) {\scriptsize 出力};
+			\draw[->] (x.east) -- (a.west);
+			\draw[->] (c.east) -- (y.west);
+		\end{tikzpicture}
+	\end{figure}
 
 \end{frame}
 
@@ -440,6 +536,12 @@
 
 	\begin{itemize}
 		\item なんと言語モデルができる
+			\begin{itemize}
+				\item このへんの話はとてもむずかしいので，わからなくてもいいです {\tiny （そもそもわかるように書いてない）}
+					\begin{itemize}
+						\item 自分はやってることわかるまで半年かかった
+					\end{itemize}
+			\end{itemize}
 	\end{itemize}
 
 \end{frame}
@@ -457,18 +559,80 @@
 
 \begin{frame}
 	\frametitle{言語のエントロピー}
+
+	\begin{itemize}
+		\item 言語$L$の文$w_1^n$の起こる確率は$P(w_1^n)$
+		\item 文$w_1^n$のエントロピーは
+			\[
+				-P(w_1^n) \log P(w_1^n)
+			\]
+		\item 言語全体でのエントロピーは
+			\[
+				H(L) = -\sum_{w_1^n}
+				P(w_1^n) \log P(w_1^n)
+			\]
+			\begin{itemize}
+				\item これを言語のエントロピーと呼びます
+					\begin{itemize}
+						\item {\scriptsize
+							言語を文の情報源とみなしたときの，
+							情報源全体の不確実さを表している}
+					\end{itemize}
+			\end{itemize}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}
 	\frametitle{相対エントロピー}
+
+	\begin{itemize}
+		\item 確率分布$P$と$Q$の距離を表す尺度
+			\\
+			\[
+				D(P||Q) = \sum_i P(x_i) \log \frac{P(x_i)}{Q(x_i)}
+			\]
+			\begin{itemize}
+				\item 大きいほど$P$と$Q$は離れている
+				\item カルバック・ライブラー距離という
+					\begin{itemize}
+						\item {\scriptsize これ，距離の公理を満たしてないんだよな}
+					\end{itemize}
+			\end{itemize}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}
 	\frametitle{クロスエントロピー}
+
+	\begin{itemize}
+		\item 言語$L$の確率分布$P_L$と言語モデル$M$の確率分布$P_M$を近づけたい！
+			\begin{itemize}
+				\item	$P_L$と$P_M$の相対エントロピーを小さくしよう！
+			\end{itemize}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}
-	\frametitle{確率的勾配降下法}
+	\frametitle{クロスエントロピー}
+	\begin{align*}
+		D(L||M) 
+		&= \sum_{w_1^n} P_L (x_i) \log \frac{P_L(x_i)}{P_M(x_i)} \\
+		&= 
+		{\color{red} - \sum_{w_1^n} P_L (x_i) \log P_M(x_i)}
+		+
+		\sum_{w_1^n} P_L (x_i) \log P_L(x_i)\\
+		&= \underbrace{\color{red} H(L, M)}_{\text{クロスエントロピー}} - \underbrace{H(L)}_{\text{言語のエントロピー}}
+	\end{align*}
+	\begin{itemize}
+		\item クロスエントロピーを小さくすればよい！
+			\begin{itemize}
+				\item どうやって小さくする？
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{最急降下法}
 
 	\begin{itemize}
 		\item クロスエントロピーを微分した方向の逆にモデルのパラメータを動かしていけば，
@@ -480,6 +644,17 @@
 					\end{itemize}
 				\item 言語モデルが学習できる！
 			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{最急降下法}
+
+	\begin{itemize}
+		\item クロスエントロピー \[ H(L, M) \]
+		\item その微分（勾配という） \[ G = \nabla H(L, M) \]
+		\item モデルのパラメータ \[ \Theta \]
+		\item つまり，適当な学習率$\alpha$で，こうすればよい \[ \Theta := \Theta - \alpha G \]
 		\item ほんとにこんなんで学習できるのか？
 			\begin{itemize}
 				\item 厳しいので工夫する
@@ -491,14 +666,29 @@
 	\frametitle{Adamアルゴリズム}
 
 	\begin{itemize}
-		\item a
+		\item 学習中の時点$t$の勾配$G_t$とし，
+			\begin{align*}
+				m_t = \beta_1 m_{t-1} + (1 - \beta_1) G_t \ \ \text{（向きの調整）}\\
+				v_t = \beta_2 v_{t-1} + (1 - \beta_2) G_t^2 \ \text{（大きさの調整）}
+			\end{align*}
+		\item[] を求めて，
+			\[
+				\Theta := \Theta - \frac{\alpha m_t}{\sqrt{v_t} + \epsilon}
+			\]
+		\item[] を計算する． {\tiny ($\epsilon$は0除算を回避するためのマシンイプシロン)}
+		\item これだと割とうまく行くことが知られている
+			\begin{itemize}
+				\item Mopumopuでもこれを使っている
+			\end{itemize}
 	\end{itemize}
-
-	(SDGの式に2つ修正点があって，1次の向きをおさえてるのと，2次の大きさをおさえてるのがあるんだって話をかけばいい)
 \end{frame}
 
 \begin{frame}
 	\frametitle{自己回帰生成}
+
+	\begin{itemize}
+		\item 言語モデルが学習できたら，文の生成をします
+	\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -519,6 +709,15 @@
 
 \begin{frame}
 	\frametitle{nymwa/ponapt}
+\end{frame}
+
+\begin{frame}
+	\frametitle{データセット}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{トークナイズとか，前処理とか}
 \end{frame}
 
 \begin{frame}
