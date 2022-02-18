@@ -6,7 +6,7 @@
 \usepackage{xeCJK}
 \setCJKmainfont{IPAPGothic}
 \newfontfamily{\liberation}{Liberation Sans}
-\newfontfamily{\notosans}{Noto Sans}
+\newfontfamily{\notosans}{Noto Sans CJK JP}
 
 % graphic
 \usepackage{graphics}
@@ -290,7 +290,7 @@
 		\item つまり，
 			\begin{itemize}
 				\item 文$w_1^n = w_1 w_2 \cdots w_n$を入力して，
-				\item 文の確率$P(w_1^n)$を計算・出力する関数てきなの
+				\item 文の確率$P(w_1^n)$を計算・出力する関数っぽいの
 			\end{itemize}
 		\item どのように計算する？
 			\begin{itemize}
@@ -312,7 +312,7 @@
 			& = P(w_1) P(w_2 | w_1) P(w_3, w_4, \cdots, w_n | w_1, w_2) \\
 			& = P(w_1) P(w_2 | w_1) P(w_3 | w_1^2) P(w_4^n | w_1^3) \\
 			& \cdots \\
-			& = \prod_{i=1}^{n} P(w_i | w_1^{i-1})
+			& = P(w_1) \prod_{i=2}^{n} P(w_i | w_1^{i-1})
 	\end{align*}
 
 	\begin{itemize}
@@ -342,7 +342,7 @@
 			\begin{itemize}
 				\item 2017年にGoogleの人たちが考案した
 					\begin{itemize}
-						\item Google翻訳のなかみもこれ
+						\item Google翻訳のなかみもこれ（だと思う）
 					\end{itemize}
 			\end{itemize}
 		\item 次からのスライドで細かいことを説明します
@@ -498,15 +498,15 @@
 	\begin{figure}[H]
 		\centering
 		\begin{tikzpicture}[>=latex,font=\sffamily,scale=1.0,transform shape]
-			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (a) at (0, 0) {};
-			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (b) at (1, 0) {};
-			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (c) at (2, 0) {};
-			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (d) at (3, 0) {};
-			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (e) at (4, 0) {};
-			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (f) at (5, 0) {};
-			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (g) at (6, 0) {};
-			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (h) at (7, 0) {};
-			\node[rectangle, text width = 3pt, text height = 70pt, draw = black] (i) at (8, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black, fill=red!20] (a) at (0, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black, fill=orange!20] (b) at (1, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black, fill=blue!20] (c) at (2, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black, fill=cyan!20] (d) at (3, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black, fill=blue!20] (e) at (4, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black, fill=cyan!20] (f) at (5, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black, fill=blue!20] (g) at (6, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black, fill=cyan!20] (h) at (7, 0) {};
+			\node[rectangle, text width = 3pt, text height = 70pt, draw = black, fill=red!20] (i) at (8, 0) {};
 			\draw[->] (a.east) -- (b.west);
 			\draw[->] (b.east) -- (c.west);
 			\draw[->] (c.east) -- (d.west);
@@ -675,7 +675,7 @@
 			\[
 				\Theta := \Theta - \frac{\alpha m_t}{\sqrt{v_t} + \epsilon}
 			\]
-		\item[] を計算する． {\tiny ($\epsilon$は0除算を回避するためのマシンイプシロン)}
+		\item[] を計算する． {\tiny ($\epsilon$は0除算を回避するためのマシンイプシロンだと思う)}
 		\item これだと割とうまく行くことが知られている
 			\begin{itemize}
 				\item Mopumopuでもこれを使っている
@@ -718,6 +718,12 @@
 
 \begin{frame}
 	\frametitle{トークナイズとか，前処理とか}
+	\begin{itemize}
+		\item ``toki!'' みたいな文はそのまま処理できない
+			\begin{itemize}
+				\item `` toki ! '' みたいに単語や記号ごとに分割したい
+			\end{itemize}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -728,8 +734,14 @@
 	\frametitle{言語モデルでチャットボットをつくる}
 
 	\begin{itemize}
-		\item ちょっと無理がある
+		\item 会話のデータがないのでちょっと無理がある
 		\item すこし怪しいことをしている
+			\begin{itemize}
+				\item 入力文$S$を受け取る．
+				\item 入力文に引用符を付けて，``$S$''みたいにする
+				\item ``$S$'' `` に続く文を生成させる
+			\end{itemize}
+		\item あんまり会話にはなってないけど，トキポナなのでなんとなく会話として解釈される感じがある
 	\end{itemize}
 \end{frame}
 
@@ -739,6 +751,13 @@
 
 \begin{frame}
 	\frametitle{おわりに}
+
+	\begin{center}
+		\large
+		{\notosans \text{≡＞ω＜≡}}
+		\\
+		pona tawa sina!
+	\end{center}
 \end{frame}
 
 \end{document}
